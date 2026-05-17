@@ -1,0 +1,36 @@
+name: Automasi Preprocessing Data
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: 
+
+jobs:
+  run-preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12.7'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas scikit-learn numpy
+
+    - name: Run preprocessing script
+      run: |
+        cd preprocessing
+        python "automate_Rian Putra Pratama.py"
+
+    - name: Upload Processed Data
+      uses: actions/upload-artifact@v4
+      with:
+        name: dataset-siap-latih
+        path: preprocessing/wine_quality_preprocessing/
